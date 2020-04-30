@@ -1,0 +1,156 @@
+\documentclass{article}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+%\usepackage[margin=4cm]{geometry}
+\setlength{\parindent}{0pt}
+
+\title{Modern Methods of Data Analysis \\ Homework 1}
+\author{Vitaliy Pozdnyakov}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Now, recall from the lecture notes that, for any set $A \in \mathcal B(\mathbb R^d)$ such that $\lambda_d(A) \in (0, +\infty)$, the uniform measure $\mathcal U_A$ on $A$ is defined, for any $B \in \mathcal B(\mathbb{R}^d )$, by 
+$$\mathcal U_A(B):= \frac{\lambda_d(A \cap B)}{\lambda_d (A)}$$
+
+\section*{Task 1}
+Show that $U_A$ is indeed a positive measure.
+\subsection*{Solution}
+
+Check that $\mu(\emptyset) = 0$
+
+$$U_A(\emptyset) = 
+\frac{\lambda_d(A \cap \emptyset)}{\lambda_d(A)} = 
+\frac{\lambda_d(\emptyset)}{\lambda_d(A)} = 
+\frac{0}{\lambda_d(A)} = 0 $$
+
+Check the countable additivity $\mu(A_1 \cup A_2 \cup \dots) = \mu(A_1) + \mu(A_2) + \dots$
+
+\begin{equation*}
+    \begin{aligned}
+        U_A(B_1 \cup B_2 \cup \dots) = & \frac{\lambda_d(A \cap [B_1 \cup B_2 \cup \dots])}{\lambda_d(A)} \\ 
+        = & \frac{\lambda_d([A \cap B_1] \cup [A \cap B_2] \cup \dots)}{\lambda_d(A)} \\
+        = & \frac{\lambda_d(A \cap B_1)}{\lambda_d(A)} + \frac{\lambda_d(A \cap B_2)}{\lambda_d(A)} + \dots \\
+        = & U_A(B_1) + U_A(B_2) + \dots
+    \end{aligned}
+\end{equation*}
+        
+Check the monotonicity $\mu(B) \leq \mu(C)$ where $B,C \in \mathcal{S}$ and $B \subset C$. Denote $C = B \cup \bar{B}$, then $U_A(C) = U_A(B \cup \bar B) = U_A(B) + U_A(\bar B)$. $ U_A \geq 0$, thereby $ U_A(B) \leq U_A(C)$
+
+\section*{Task 2}
+Show that $ U_A \ll \lambda_d$.
+\subsection*{Solution}
+
+Chose $B$ such that $\lambda_d(B) = 0$. Obviously, $(A \cap B) \subseteq B$, then via monotonicity $\lambda_d(A\cap B) \leq \lambda_d(B)$. Thereby
+
+$$U_A(B) = \frac{\lambda_d(A \cap B)}{\lambda_d(A)} = \frac{0}{\lambda_d(A)} = 0$$
+
+\section*{Task 3}
+
+Show that both $U_A$ and $\lambda_d$ are $\sigma$-finite measures.
+
+\subsection*{Solution}
+
+\begin{itemize}
+    \item \textit{Def. The measure $\mu$ is called a $\sigma$-finite if there exists subsets $\{S_n\}_{n\geq1}$ such that $S_n \in \mathcal S, S_n \subset S_{n+1}, \cup_n S_n = S$ and $\mu(S_n) < +\infty$.}
+\end{itemize}
+
+First, consider $\lambda_d$. Let $S_n = (-n, n)^d$ where $0 \leq n < +\infty$. Then $S_n \in \mathcal B (R^d)$, $S_n \subset S_{n+1}$, $\cup_n S_n = R^d$ and $\lambda_d(S_n) = (2n)^d< +\infty$.
+
+Next, Consider $U_A$. Let $A = (-m, m)^d$ and $B_n = (-n, n)^d$ where $0 \leq n \leq m < +\infty$. Then $B_n \in \mathcal B (R^d)$, $B_n \subset B_{n+1}$, $\cup_n B_n = (-m, m)^d$ and
+
+$$U_A(B_0) = 
+\frac{\lambda_d(A \cap B_0)}{\lambda_d(A)} =
+\frac{0}{\lambda_d(A)} = 0
+$$
+
+$$U_A(B_m) = 
+\frac{\lambda_d(A \cap B_m)}{\lambda_d(A)} =
+\frac{\lambda_d(A)}{\lambda_d(A)} = 1
+$$
+
+$$0 \leq U_A(B_n) \leq 1 < +\infty$$
+
+\section*{Task 4}
+
+Give the expression of the density of $U_A$ with respect to $\lambda_d$.
+
+\subsection*{Solution}
+
+$$\frac{dU_A}{d\lambda_d} := f \Rightarrow U_A(B) = \int_B f d \lambda_d$$
+
+Consider $\lambda_d(A\cap B)$
+
+$$\lambda_d(A\cap B) = \int_{A\cap B}f d \lambda_d = \int_B \mathbf 1_A d \lambda_d$$
+
+Then $$ U_A(B)= \frac{\lambda_d(A \cap B)}{\lambda_d(A)} = 
+\frac{\int_B \mathbf 1_A d \lambda_d}{\lambda_d(A)} =
+\int_B \frac{\mathbf 1_A}{\lambda_d(A)}d \lambda_d$$
+
+Thereby 
+$$f=\frac{\mathbf 1_A}{\lambda_d(A)}$$ 
+
+Check: 
+$$ U_A(B)=
+\int_B \frac{\mathbf 1_A}{\lambda_d(A)}d \lambda_d = \int_S \frac{\mathbf 1_A \mathbf 1_B}{\lambda_d(A)}d \lambda_d = 
+\frac{\lambda_d(A \cap B)}{\lambda_d(A)}$$
+
+\section*{Task 5}
+
+Suppose that $d = 2$ and that set $A$ is of the form $A = T([0, 1]^2) = \{T(x) : x \in [0, 1]^2\}$ where $T : R^2 \rightarrow R^2$ is defined, for all $x = (x_1, x_2) \in R^2$, by $T(x) = (\alpha(x_1 \cos \theta + x_2 \sin \theta), \alpha(x_2 \cos \theta - x_1 \sin \theta))$, for some $\theta \in [0, 2\pi)$ and $\alpha > 0$. Give the explicit form of the density of $U_A$ with respect to $\lambda_d$.
+
+\subsection*{Solution}
+
+Consider the transformation $T$
+
+$$T
+\begin{pmatrix}
+    x_1\\
+    x_2
+\end{pmatrix} = 
+\begin{pmatrix}
+    \alpha \cos \theta & \alpha \sin \theta \\ 
+    - \alpha \sin \theta & \alpha \cos \theta 
+\end{pmatrix} 
+\begin{pmatrix}
+    x_1\\x_2
+\end{pmatrix} = MX$$
+
+$$\det M = \alpha^2 (\cos^2 \theta + \sin^2 \theta) = \alpha^2$$
+
+Then $$\lambda_d(T([0, 1]^2)) = |\det M|\lambda_d([0,1]^2) = \alpha^2 (1 - 0) \cdot (1 - 0) = \alpha^2$$
+
+And consequently $$\frac{d U_A}{d \lambda_d} = \frac{\mathbb1_A}{\lambda_d(A)} = \frac{\mathbb1_A}{\alpha^2}$$ where $A = T([0, 1]^2)$
+
+\section*{Task 6}
+
+Recall that the counting measure $\eta$ on $(R^d, \mathcal B(R^d))$ is defined for any $A \in \mathcal B(R^d)$ by $\eta(A) = card(A)$ (i.e. $\eta(A)$ is the number of elements in $A$). 
+
+(1) Show that $\eta$ is not $\sigma$-finite.
+
+(2) Show that $\lambda_d \ll \eta$.
+
+(3) Show that $\lambda_d$ does not have a density with respect to $\eta$: there exists no measurable and positive function $f : R^d \rightarrow R^+$ such that
+$$\lambda_d(A)=\int_A f d\eta.$$
+
+\subsection*{Solution (1)}
+
+Consider the sequence $S_1, S_2, \dots$ where $S_n \subset S_{n+1}$. If $S_1 \cup S_2 \cup \dots = R^d$, then at least one $S_i$ is open or closed segment and $\eta(S_i) = +\infty$. Thereby $\eta(A)$ is not $\sigma$-finite.
+
+\subsection*{Solution (2)}
+
+$\eta(B) = 0$ iff $B = \emptyset$ and $\lambda_d(\emptyset)=0$, then $\lambda_d \ll \eta$
+
+\subsection*{Solution (3)}
+
+Suppose that $\lambda_d$ have a density with respect to $\eta$. Consider arbitrary point $x \in R^d$
+
+$$\lambda_d(\{x\}) = 0 \Rightarrow \lambda_d(\{x\}) = \int_{\{x\}}fd\eta = \int_{R^d}\mathbb 1_{\{x\}} f d\eta = 0 \Rightarrow f = 0$$ 
+
+But it means that for all $A \in \mathcal B(R^d): \lambda_d(A) = 0$
+and it is contradition. Thereby $\lambda_d$ does not have a density with respect to $\eta$.
+
+
+\end{document}
