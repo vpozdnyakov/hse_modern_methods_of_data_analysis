@@ -1,0 +1,127 @@
+\documentclass{article}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+%\usepackage[margin=4cm]{geometry}
+\setlength{\parindent}{0pt}
+
+\title{Modern Methods of Data Analysis \\ Homework 2}
+\author{Vitaliy Pozdnyakov}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Let $(\Omega, \mathcal A, P)$ be a probability space. Recall that, for $1 \leq p \leq +\infty$, $\mathcal L^p(\Omega,A,P)$ denotes the space of all $\mathbb R$-valued random variables $X : \Omega \to \mathbb R$ such that $\mathbb E[|X|^p] < +\infty$. For $X \in \mathcal L^p(\Omega,A,P)$, we denote
+$$ \Vert X \Vert_p :=E[|X|^p]^{1/p}$$
+Recall that $\mathcal L^{\infty}(\Omega,A,P)$ denotes the space of all $\mathbb R$-valued random variables $X : \Omega \to \mathbb R$ for which there exists $C > 0$ such that $P(|X| > C) = 0$. For $X \in \mathcal L^\infty(\Omega,A,P)$, we denote
+$$\Vert X \Vert_\infty := \inf\{C >0:P(|X|>C)=0\}.$$
+
+\section*{Task 2}
+
+**Let $X \in \mathcal L^1 (\Omega, \mathcal A, P)$ be such that $P(X \neq 0) > 0$. Consider the function $m : [1, +\infty) \to [0, +\infty]$ defined by $m(p) := E[|X|^p]$. Show that the set $\mathcal J := \{p \in [1, +\infty) : m(p) < +\infty\}$ is an interval.**
+
+\subsection*{Solution}
+
+Proof via contradiction:
+
+$m(1) < +\infty$ via definition of $\mathcal L^1$. Now suppose that there exist $a$ and $b$ such that $1 \leq a \leq b < +\infty$ and
+
+$$\begin{cases}
+m(1) < +\infty \\
+m(a) = +\infty \\
+m(b) < +\infty \\
+\end{cases}
+\Leftrightarrow
+\begin{cases}
+X \in \mathcal L^1 \\
+X \notin \mathcal L^a \\
+X \in \mathcal L^b \\
+\end{cases}$$
+
+Then $a \notin \mathcal J$ and $\mathcal J$ is not an interval. From the previous task we know that if $a \leq b$ then $\mathcal L^b \subset \mathcal L^a$. So if $X \in \mathcal L^b$ then $X \in \mathcal L^a$, but this is contradiction. Therefore $a \in \mathcal J$ and $\mathcal J$ is an interval.
+
+\section*{Task 4}
+
+Suppose that $X \in L^\infty(\Omega, \mathcal A, P)$. Show that $\lim_{p\to+\infty} \Vert X \Vert_p = \Vert X \Vert_\infty$.
+
+\subsection*{Solution}
+
+On the one side, $\Vert X \Vert_\infty = \inf\{C>0:P(\vert X \vert > C) = 0\}$ via defenition and then $|X(\omega)| \leq \Vert X \Vert_\infty$, $P$-a.e., so
+
+$$ \left(\int_\Omega \vert X \vert ^p dP \right)^{1/p} \leq \left(\int_\Omega \Vert X \Vert^p_\infty dP \right)^{1/p}$$
+$$\Rightarrow \Vert X \Vert_p \leq \left(\Vert X \Vert_\infty^p P(\Omega) \right)^{1/p}$$
+$$\Rightarrow \Vert X \Vert_p \leq \Vert X \Vert_\infty  P(\Omega)^{1/p}$$
+
+Since $P(\Omega)^{1/p} = 1$ by definition of a probability space, we have 
+
+$$\limsup_{p\to+\infty} \Vert X \Vert_p \leq \Vert X \Vert_\infty$$ 
+
+On the other side, by defenition of $\mathcal L^\infty$, for all $\varepsilon > 0$ there exists a probability value $a$ such that
+
+$$P(\{\omega : |X (\omega)| \geq \Vert X \Vert_\infty - \varepsilon \}) \geq a$$
+
+And then 
+$$\int_\Omega |X|^p dP \geq a(\Vert X \Vert_\infty - \varepsilon)^p$$
+
+Therefore
+$$\liminf_{p\rightarrow+\infty}\Vert X \Vert_p \geq \Vert X \Vert_\infty - \varepsilon$$
+
+Since $\varepsilon$ is arbitrary, consequently we proved that 
+$$\lim_{p\to+\infty} \Vert X \Vert_p = \Vert X \Vert_\infty$$
+
+\section*{Task 6}
+
+Consider $X \sim \mathcal N(m, \sigma^2)$, for $m \in \mathbb R$ and $\sigma^2 > 0$. Show that $X \in \mathcal L^p (\Omega, \mathcal A, P)$, for all $p \in [1, +\infty)$, but that $X \notin \mathcal L^\infty(\Omega, \mathcal A, P)$.
+
+\subsection*{Solution}
+
+Consider the moment-generating function for the random variable $|X| : \Omega \rightarrow \mathbb R_+$
+
+$$M_{|X|}(t) = E[e^{t|X|}] = \int_{\mathbb R}e^{t|x|} \rho d \lambda_1 = \int_{-\infty}^{+\infty} e^{t|x|} \rho(x) dx$$
+where
+$$\rho(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-\frac{(x-m)^2}{2 \sigma^2}}$$
+If $X \in \mathcal L^p(\Omega, \mathcal A, P)$ then $E[|X|^p]<+\infty$ via definition, and one of the property of the moment-generating function is $E[|X|^p] = \frac{d^p}{dt^p}M_{|X|}(t)$ where $t = 0$. So, the proof is complete provided we can show that $$\frac{d^p}{dt^p}M_{|X|}(t) <+\infty$$ for all $p \in [1, +\infty)$ where $t = 0$.
+
+Consider the case where $m = 0$ and $\sigma^2 = 1$. Denote $Y \sim \mathcal N(0, 1)$
+$$M_{|Y|}(t) = \int_{-\infty}^{+\infty}e^{t|x|}  \frac{1}{\sqrt{2 \pi}} e^{-x^2/2} dx = 
+\exp\left(\frac{t^2}{2}\right)\left(\text{erf}\left(\frac{t}{\sqrt 2}\right) + 1\right)$$
+where $\text{erf}(x) = \frac{2}{\sqrt \pi}\int_0^x e^{-t^2}dt$ (the error function).
+
+Consider only integers $p$, denoted as $n$. And then
+$$E[|Y|^n] = 
+\frac{d^n}{dt^n}\left[\exp\left(\frac{t^2}{2}\right)\left(\text{erf}\left(\frac{t}{\sqrt 2}\right) + 1\right)\right]$$ where $t=0$.
+
+We can observe that $n$-derivation of types of functions $e^x$, $\frac{x^m}{C}$, $\text{erf}(x)$ and their compositions produces functions of the same types (and constants) for all $n$. So the values of these functions are less than $+\infty$ for all $n$ with $t = 0$ and consequenly $E[|Y|^n] < +\infty$. Next, $E[|X|^n] < +\infty$ too because we can make the linear substitution $X = m + \sigma Y$ and get the same inequality. Moreover, for all $p \notin \mathbb N$ we can find $n$ such that $p < n$, and from the Task 1 we know that if $X \in \mathcal L^n$ then $X \in \mathcal L^p$. Hence, $X \in \mathcal L^p (\Omega, \mathcal A, P)$, for all $p \in [1, +\infty)$.
+
+Finally, for $ Y \sim\mathcal N(0,1)$ we can see that
+$$\rho(x) = \frac{1}{\sqrt{2 \pi}}e^{-x^2/2} > 0$$ for all $x\in(-\infty, +\infty)$ and thereby there is no $C > 0$ such that $P(|Y| > C) = 0$ and consequenly $Y \notin \mathcal L^\infty$. We can obtain the same result for $X$ via linear substitution.
+
+\section*{Task 8}
+
+Let $X$ be a $(0, +\infty)$-valued random variables such that $X \in \mathcal L^p (\Omega, \mathcal A, P)$ for some $p > 1$. For $t \in [1, p]$, we define $\phi(t) := E[X^t] - E[X]^t$. Show that $\text{Ent}[X] = \phi'(1+) := \lim_{p\downarrow 1}\frac{\phi(p) - \phi(1)}{p - 1}$.
+
+\subsection*{Solution}
+
+$$\phi'(1+) := 
+\lim_{p \downarrow 1}\frac{\phi(p) - \phi(1)}{p-1} 
+=\lim_{\Delta p \downarrow 0}\frac{\phi(1 + \Delta p) - \phi(1)}{\Delta p}$$
+$$=\lim_{\Delta p \downarrow 0}\frac{E[XX^{\Delta p}] - E[X]E[X]^{\Delta p} - E[X] + E[X]}{\Delta p}$$
+$$=\lim_{\Delta p \downarrow 0}\frac{E[XX^{\Delta p}] - E[X]E[X]^{\Delta p}}{\Delta p}$$
+$$=\left[ \frac{E[XX^0] - E[X]E[X]^0}{0} = \frac{0}{0}\right]$$
+
+Apply L'Hopital's rule
+
+$$= 
+\lim_{\Delta p \downarrow 0}\frac{\left(E[XX^{\Delta p}] - E[X]E[X]^{\Delta p}\right)'}{\Delta p'}$$
+$$=\lim_{\Delta p \downarrow 0}\left(E'[XX^{\Delta p}] - (E[X]E[X]^{\Delta p})'\right)$$
+$$=\lim_{\Delta p \downarrow 0}\left(E'[XX^{\Delta p}] - E[X]\ln E[X]\right)$$
+
+Apply the property of the expectation $E'[X] = E[X']$
+
+$$= 
+\lim_{\Delta p \downarrow 0}\left(E\left[(XX^{\Delta p})'\right] - E[X]\ln E[X]\right)$$
+$$=\lim_{\Delta p \downarrow 0}\left(E[X \ln X] - E[X]\ln E[X]\right)$$
+$$=E[X \ln X] - E[X]\ln E[X] := \text{Ent}[X]$$
+
+\end{document}
